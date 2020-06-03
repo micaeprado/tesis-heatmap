@@ -11,12 +11,14 @@ import { HeatmapComponent } from './heatmap/heatmap.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 
 import { HeatmapService } from './heatmap/heatmap.service';
+import { PolylineComponent } from './polyline/polyline.component';
 
 const routes : Routes = [
   {path: '', redirectTo: '/incident', pathMatch: 'full'},
   {path: 'incident', component: IncidentComponent},
   {path: 'incident/page/:page', component: IncidentComponent},
   {path: 'heatmap', component: HeatmapComponent},
+  {path: 'polyline', component: PolylineComponent},
 ];
 
 @NgModule({
@@ -26,7 +28,8 @@ const routes : Routes = [
     FooterComponent,
     HeatmapComponent,
     IncidentComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    PolylineComponent
   ],
   imports: [
     BrowserModule,
