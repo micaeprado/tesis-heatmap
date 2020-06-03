@@ -1,7 +1,6 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { map } from 'rxjs/operators';
 import {} from 'googlemaps';
-import { DeleteMenu } from './delete';
 
 
 @Component({
@@ -14,19 +13,18 @@ export class PolylineComponent implements AfterViewInit {
   static markers = [];
   @ViewChild('map', {static: false}) mapElement: ElementRef;
 
-  constructor(private deleteMenu: DeleteMenu) { }
+  constructor() { }
 
   ngAfterViewInit() {
     this.initMap();
   }
 
   initMap() {
-    const mapOptions = {
+    var map= new google.maps.Map(this.mapElement.nativeElement, {
       zoom: 13,
       center: {lat: -34.6131500, lng: -58.3772300},
       mapTypeId: google.maps.MapTypeId.TERRAIN
-    };
-    var map= new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+    });
 
     var poly = new google.maps.Polyline({
       geodesic: true,
