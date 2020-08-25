@@ -1,0 +1,44 @@
+<div class="modal" *ngIf="modalIsOpen()" tabindex="-1" role="dialog" style="display:block">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Elementos del CSV</h5>
+        <button type="button" (click)="closeModal()" class="close"
+        data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #fileForm= "ngForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">
+              Indica cual de los elementos corresponde a la latitud
+            </label>
+            <select class="form-control" id="exampleFormControlSelect1" name="latitude"
+            (ngModel)="latitude" (ngModelChange)="latitude = $event" requered>
+              <option [value]="itemLat" *ngFor="let itemLat of items">{{itemLat}}</option>
+            </select>
+
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlSelect2">
+              Indica cual de los elementos corresponde a la longitud
+            </label>
+            <select class="form-control" id="exampleFormControlSelect2"
+            (ngModel)="longitude" name="longitude"
+            (ngModelChange)="longitude = $event" requered>
+              <option [value]="itemLng" *ngFor="let itemLng of items">{{itemLng}}</option>
+            </select>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"
+          (click)="closeModal()" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary"
+          [disabled]= "!fileForm.form.valid" (click)="saveElementsAndUploadFile()">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
