@@ -12,6 +12,7 @@ import { HttpEventType } from '@angular/common/http';
 export class FileModalComponent implements OnInit {
   @Input()items:String[];
   @Input()file: File;
+  @Input()fileName: string;
   longitude:string;
   latitude:string;
   separator:string;

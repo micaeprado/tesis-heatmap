@@ -14,6 +14,7 @@ export class DataLoaderComponent implements OnInit {
   file: File;
   header = false;
   items: String[];
+  fileName: String = "Seleccionar archivo CSV";
 
   constructor(
     private dataLoaderService: DataLoaderService,
@@ -26,6 +27,7 @@ export class DataLoaderComponent implements OnInit {
     let reader = new FileReader();
     if(event.target.files && event.target.files.length > 0) {
       this.file = event.target.files[0];
+      this.fileName = this.file.name;
     }
   }
 
