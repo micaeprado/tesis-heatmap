@@ -14,6 +14,8 @@ export class FileModalComponent implements OnInit {
   @Input()file: File;
   longitude:string;
   latitude:string;
+  separator:string;
+  quote:string;
   errors: string[];
 
   constructor(
@@ -34,8 +36,8 @@ export class FileModalComponent implements OnInit {
     if(!this.file){
       swal.fire('Error Upload', 'Debe seleccionar un archivo CSV', 'error');
     } else {
-      console.log(this.latitude);
-      this.dataLoaderService.uploadFile(this.file, this.latitude, this.longitude)
+      this.dataLoaderService.uploadFile(this.file, this.latitude, this.longitude,
+        this.separator, this.quote)
       .subscribe( event => {
         if(event.type === HttpEventType.Response) {
             swal.fire('El archivo CSV se ha subido correctamente',
@@ -48,6 +50,7 @@ export class FileModalComponent implements OnInit {
           console.error(err.error.errors);
         }
       );
+      this.closeModal();
     }
   }
 

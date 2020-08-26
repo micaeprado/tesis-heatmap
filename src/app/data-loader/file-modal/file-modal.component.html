@@ -18,7 +18,6 @@
             (ngModel)="latitude" (ngModelChange)="latitude = $event" requered>
               <option [value]="itemLat" *ngFor="let itemLat of items">{{itemLat}}</option>
             </select>
-
           </div>
           <div class="form-group">
             <label for="exampleFormControlSelect2">
@@ -29,7 +28,29 @@
             (ngModelChange)="longitude = $event" requered>
               <option [value]="itemLng" *ngFor="let itemLng of items">{{itemLng}}</option>
             </select>
-
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlSelect3">
+              Indica el separador de los campos
+            </label>
+            <select class="form-control" id="exampleFormControlSelect3"
+            (ngModel)="separator" name="separator"
+            (ngModelChange)="separator = $event" requered>
+              <option>,</option>
+              <option>;</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlSelect4">
+              Indica el tipo de comillas en los campos
+            </label>
+            <select class="form-control" id="exampleFormControlSelect4"
+            (ngModel)="quote" name="quote"
+            (ngModelChange)="quote = $event" requered>
+              <option>"</option>
+              <option>'</option>
+              <option>Ninguno</option>
+            </select>
           </div>
         </div>
         <div class="modal-footer">
