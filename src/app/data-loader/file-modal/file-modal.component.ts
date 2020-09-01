@@ -37,6 +37,7 @@ export class FileModalComponent implements OnInit {
     if(!this.file){
       swal.fire('Error Upload', 'Debe seleccionar un archivo CSV', 'error');
     } else {
+      console.log(this.quote);
       this.dataLoaderService.uploadFile(this.file, this.latitude, this.longitude,
         this.separator, this.quote)
       .subscribe( event => {

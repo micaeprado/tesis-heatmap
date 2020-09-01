@@ -33,31 +33,36 @@
             <label for="exampleFormControlSelect3">
               Indica el separador de los campos
             </label>
-            <select class="form-control" id="exampleFormControlSelect3"
-            (ngModel)="separator" name="separator"
-            (ngModelChange)="separator = $event" requered>
-              <option>,</option>
-              <option>;</option>
-            </select>
+            <input type="text" class="form-control" name="separator"
+               (ngModelChange)="separator = $event" (ngModel)="separator"
+                style="width:60px" placeholder="Ej: , " required>
           </div>
           <div class="form-group">
             <label for="exampleFormControlSelect4">
               Indica el tipo de comillas en los campos
             </label>
-            <select class="form-control" id="exampleFormControlSelect4"
-            (ngModel)="quote" name="quote"
-            (ngModelChange)="quote = $event" requered>
-              <option>"</option>
-              <option>'</option>
-              <option>Ninguno</option>
-            </select>
+            <div class="form-check" style="padding-rigth: 20px;">
+              <input (ngModel)="quote" (ngModelChange)="quote = $event" class="form-check-input"
+              type="radio" name="quote" id="quote1" value='"' checked>
+              <label class="form-check-label" for="quote1">"</label>
+            </div>
+            <div class="form-check">
+              <input (ngModel)="quote" (ngModelChange)="quote = $event" class="form-check-input"
+              type="radio" name="quote" id="quote2" value="'">
+              <label class="form-check-label" for="quote2">'</label>
+            </div>
+            <div class="form-check">
+                <input (ngModel)="quote" (ngModelChange)="quote = $event" class="form-check-input"
+                type="radio" name="quote" id="quote3" value="Ninguno">
+                <label class="form-check-label" for="quote3">Ninguno</label>
+            </div>
           </div>
-        </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary"
           (click)="closeModal()" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary"
           [disabled]= "!fileForm.form.valid" (click)="saveElementsAndUploadFile()">Save</button>
+        </div>
         </div>
       </form>
     </div>
