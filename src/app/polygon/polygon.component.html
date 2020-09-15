@@ -1,5 +1,11 @@
-<title>{{title}}</title>
+
 <body>
   <h3>{{title}}</h3>
-  <div #map id="map"></div>
+  <div id="floating-panel">
+      <input (click)= "removeLine()" type="button" value="Remove line" />
+      <input (click)= "addLine()" type="button" value="Restore line" />
+    </div>
+  <div #mapPolygon id="mapPolygon" ></div>
+  <button type="button" name="save" class="btn btn-primary btn-sm mt-3"
+            (click)= 'saveNewPolygon()'  >Crear nueva Zona</button>
 </body>

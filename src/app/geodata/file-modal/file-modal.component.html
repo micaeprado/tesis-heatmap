@@ -2,7 +2,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Elementos del CSV {{fileName}}</h5>
+        <h5 class="modal-title">Configuracion del CSV</h5>
         <button type="button" (click)="closeModal()" class="close"
         data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -10,6 +10,27 @@
       </div>
       <form #fileForm= "ngForm">
         <div class="modal-body">
+          <div class="form-group">
+            <div class="card ">
+              <div class="card-header">{{ title }}</div>
+              <div class="card-body">
+                <form >
+                  <div class="input-group mb-3">
+                   <div class="custom-file ">
+                     <input (change)="selectFile($event)" type="file" class="custom-file-input"
+                     accept=".csv" id="customFileLang" aria-describedby="inputGroupFileAddon04"
+                     #fileImportInput>
+                     <label class="custom-file-label" for="customFileLang">{{fileName}}</label>
+                   </div>
+                   <div class="input-group-append">
+                     <button (click)="readHeader()" [disabled]="!file" class="btn btn-outline-secondary"
+                       type="button" id="inputGroupFileAddon04">Subir</button>
+                   </div>
+                 </div>
+                </form>
+              </div>
+            </div>
+          </div>
           <div class="form-group">
             <label for="exampleFormControlSelect1">
               Indica cual de los elementos corresponde a la latitud
@@ -57,12 +78,12 @@
                 <label class="form-check-label" for="quote3">Ninguno</label>
             </div>
           </div>
+          </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary"
           (click)="closeModal()" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary"
           [disabled]= "!fileForm.form.valid" (click)="saveElementsAndUploadFile()">Save</button>
-        </div>
         </div>
       </form>
     </div>

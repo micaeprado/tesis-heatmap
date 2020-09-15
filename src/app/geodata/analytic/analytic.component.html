@@ -1,0 +1,79 @@
+<file-modal [newFile]="newFile"></file-modal>
+
+<div class="card ">
+  <div class="card-header">{{ title }}</div>
+  <div class="card-body">
+    <form >
+      <div class="input-group mb-3 row">
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="fileSelectedFormControlSelect">
+                  Cargar CSV
+                </label>
+                <select class="form-control" id="fileSelectedFormControlSelect"
+                name="fileSelected" required
+                (ngModel)="fileSelected" (ngModelChange)="handleOnFileDataChange($event)">
+                <option disabled>Seleccionar CSV</option>
+                  <option [ngValue]="file" *ngFor="let file of filesData">
+                    {{ file.fileName }}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-outline-secondary"
+                type="button" id="newCsvButon" (click)="openModal()">Cargar un nuevo CSV</button>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group" *ngIf="fileSelected">
+                <label for="filterFormControlSelect">
+                  Filtro
+                </label>
+                <select class="form-control" id="filterFormControlSelect"
+                name="filterHeaderSelected" required [disabled]="!fileSelected"
+                (ngModel)="filterHeaderSelected" (ngModelChange)="handleOnFilterHeaderChange($event)">
+                  <option [value]="filterHeader"
+                  *ngFor="let filterHeader of fileSelected.header">{{filterHeader}}</option>
+                </select>
+            </div>
+            <div class="form-group"  *ngIf="filterHeaderSelected">
+                <label for="valueFilterFormControlSelect">
+                  Value
+                </label>
+                <select class="form-control" id="valueFilterFormControlSelect"
+                name="valueSelected" required [disabled]="!filterHeaderSelected"
+                (ngModel)="valueSelected" (ngModelChange)="valueSelected = $event">
+                  <option [value]="value" *ngFor="let value of filter">{{value}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group" *ngIf="fileSelected">
+                <label for="headerFunctionFormControlSelect">
+                  Filter
+                </label>
+                <select class="form-control" id="headerFunctionFormControlSelect"
+                 name="functionHeaderSelected" requered [disabled]="!fileSelected"
+                 (ngModel)="functionHeaderSelected" (ngModelChange)="functionHeaderSelected = $event">
+                  <option [value]="functionHeader"
+                  *ngFor="let functionHeader of fileSelected.header">{{functionHeader}}</option>
+                </select>
+            </div>
+            <div class="form-group" *ngIf="functionHeaderSelected">
+                <label for="functionFormControlSelect">
+                  Funcion
+                </label>
+                <select class="form-control" id="functionFormControlSelect"
+                 name="functionSelected" requered [disabled]="!functionHeaderSelected"
+                (ngModel)="functionSelected" (ngModelChange)="functionSelected = $event">
+                  <option [value]="function" *ngFor="let function of functions">{{function}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col mt-5 text-right">
+           <button [disabled]="!fileSelected" class="btn btn-outline-primary"
+           type="button" id="inputGroupFileAddon04" (click)="createMap()">Crear Mapa</button>
+       </div>
+     </div>
+    </form>
+  </div>
+</div>

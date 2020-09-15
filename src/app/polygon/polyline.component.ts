@@ -1,5 +1,4 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { map } from 'rxjs/operators';
 import {} from 'googlemaps';
 
 
@@ -8,15 +7,17 @@ import {} from 'googlemaps';
   templateUrl: './polyline.component.html',
   styleUrls: ['./polyline.component.css']
 })
-export class PolylineComponent implements AfterViewInit {
+export class PolylineComponent implements  AfterViewInit {
   title = 'Polyline';
-  static markers = [];
   @ViewChild('map', {static: false}) mapElement: ElementRef;
+  static markers = [];
+  points :any;
+  finalPoints :any;
 
   constructor() { }
 
   ngAfterViewInit() {
-    this.initMap();
+   this.initMap();
   }
 
   initMap() {
@@ -50,10 +51,11 @@ export class PolylineComponent implements AfterViewInit {
         poly.getPath().removeAt(e.vertex);
       }
     });
+
+    this.points = poly.getPath();
   }
 
-
-  static addLatLng(e:any, poly:any, map:any) {
+   static addLatLng(e: google.maps.MouseEvent | google.maps.IconMouseEvent, poly: google.maps.Polyline, map: google.maps.Map<any>) {
     let path = poly.getPath();
     // Because path is an MVCArray, we can simply append a new coordinate
     // and it will automatically appear.
@@ -64,13 +66,17 @@ export class PolylineComponent implements AfterViewInit {
       position: e.latLng,
       icon: {
             path: google.maps.SymbolPath.CIRCLE,
-            scale: 0
+            scale: 3
       },
       title: '#' + path.getLength(),
       map: map
     });
-
     this.markers.push(marker);
+  }
+
+  addPoints() {
+    console.log(this.points);
+    this.finalPoints = Object.assign(this.points);
   }
 
 }

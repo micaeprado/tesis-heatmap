@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { HeatmapService } from './heatmap.service';
-import { Incident } from './incident';
 import {} from 'googlemaps';
+import { map } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-heatmap',
@@ -16,9 +17,8 @@ export class HeatmapComponent implements OnInit, AfterViewInit {
   lat: number;
   lng: number;
   zoom: number;
-  incidents: Incident[];
   totalSeconds: number;
-  title: string = 'Incidents';
+  title: string = 'Heatmap';
 
   constructor(private heatmapService: HeatmapService) { }
 
@@ -35,16 +35,14 @@ export class HeatmapComponent implements OnInit, AfterViewInit {
           center: {lat: -34.6131500, lng: -58.3772300},
           mapTypeId: google.maps.MapTypeId.TERRAIN
       };
-      console.log(this.mapElement.nativeElement);
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
 
-      this.heatmapService.getAllIncidents().subscribe(
-        response => {
-          this.incidents = response as Incident[];
-          console.log(this.incidents);
-          this.eqfeed_callback(JSON.parse(JSON.stringify(this.incidents)));
-        });
+      //this.heatmapService.getAllElements().subscribe(
+        //response => {
+        //  this.incidents = response as Incident[];
+        //  this.eqfeed_callback(JSON.parse(JSON.stringify(this.incidents)));
+      //  });
   }
 
   getTotalSegundos(results: string | any[]):number {
@@ -65,7 +63,6 @@ export class HeatmapComponent implements OnInit, AfterViewInit {
           for (var j = 0; j < pointList.length; j++) {
               var latLng = new google.maps.LatLng(pointList[j].lat, pointList[j].lng);
               var seconds = results[i].seconds;
-              //console.log(seconds/total);
               var weightedLoc = {
                   location: latLng,
                   weight: seconds/total

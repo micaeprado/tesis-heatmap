@@ -1,29 +1,32 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalService } from './modal.service';
 import swal from 'sweetalert2';
-import { DataLoaderService } from '../data-loader.service';
 import { HttpEventType } from '@angular/common/http';
+import { DataLoaderService } from '../data-loader/data-loader.service';
+import { NgxCsvParser, NgxCSVParserError } from 'ngx-csv-parser';
 
 @Component({
   selector: 'file-modal',
   templateUrl: './file-modal.component.html',
   styleUrls: ['./file-modal.component.css']
 })
-export class FileModalComponent implements OnInit {
-  @Input()items:String[];
-  @Input()file: File;
-  @Input()fileName: string;
+export class FileModalComponent {
+  @Input()newFile: File;
+  title: string = 'Cargar CSV';
   longitude:string;
   latitude:string;
   separator:string;
   quote:string;
   errors: string[];
+  header = false;
+  file: File;
+  items: String[];
+  fileName: String = "Seleccionar archivo CSV";
 
   constructor(
     private modalService: ModalService,
-    private dataLoaderService: DataLoaderService) { }
-
-  ngOnInit(): void {}
+    private dataLoaderService: DataLoaderService,
+    private ngxCsvParser: NgxCsvParser) { }
 
   modalIsOpen():boolean{
     return this.modalService.modalIsOpen();
@@ -54,6 +57,24 @@ export class FileModalComponent implements OnInit {
       );
       this.closeModal();
     }
+  }
+
+  selectFile(event) {
+    let reader = new FileReader();
+    if(event.target.files && event.target.files.length > 0) {
+      this.file = event.target.files[0];
+      this.fileName = this.file.name;
+    }
+  }
+
+  readHeader() {
+    this.ngxCsvParser.parse(this.file, { header: this.header, delimiter: ',' })
+      .pipe().subscribe((result: Array<any>) => {
+        this.items = result[0][0].split(";");
+        //this.modalService.openModal();
+      }, (error: NgxCSVParserError) => {
+        console.log('Error', error);
+      });
   }
 
 }
