@@ -1,4 +1,4 @@
-<file-modal [newFile]="newFile"></file-modal>
+<file-modal></file-modal>
 
 <div class="card ">
   <div class="card-header">{{ title }}</div>
@@ -22,7 +22,20 @@
                 <button class="btn btn-outline-secondary"
                 type="button" id="newCsvButon" (click)="openModal()">Cargar un nuevo CSV</button>
             </div>
+            <div class="form-group" >
+                <label for="filterFormControlSelect">
+                  Zona
+                </label>
+                <select class="form-control" id="zoneFormControlSelect"
+                name="selectedZone" required
+                (ngModel)="selectedZone" (ngModelChange)="handleOnZoneChange($event)">
+                <option disabled>Seleccionar zona</option>
+                  <option [ngValue]="zone" *ngFor="let zone of zones">
+                    {{zone.name}}</option>
+                </select>
+            </div>
         </div>
+
         <div class="col-sm-4">
             <div class="form-group" *ngIf="fileSelected">
                 <label for="filterFormControlSelect">
@@ -76,4 +89,5 @@
      </div>
     </form>
   </div>
+  <app-heatmap [dataMap]="dataMap"></app-heatmap>
 </div>

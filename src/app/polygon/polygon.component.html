@@ -1,10 +1,14 @@
 
 <body>
   <h3>{{title}}</h3>
-  <div id="floating-panel">
-      <input (click)= "removeLine()" type="button" value="Remove line" />
-      <input (click)= "addLine()" type="button" value="Restore line" />
-    </div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect3">
+      Nombre:
+    </label>
+    <input type="text" class="form-control" name="name"
+       (ngModelChange)="name = $event" (ngModel)="name"
+        style="width:150px"  required>
+  </div>
   <div #mapPolygon id="mapPolygon" ></div>
   <button type="button" name="save" class="btn btn-primary btn-sm mt-3"
             (click)= 'saveNewPolygon()'  >Crear nueva Zona</button>

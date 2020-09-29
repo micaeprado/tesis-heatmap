@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ElementRef, Input, OnChanges } from '@angular/core';
 import { HeatmapService } from './heatmap.service';
 import {} from 'googlemaps';
 import { map } from 'rxjs/operators';
-
+import {Element} from 'src/app/module/element';
 
 @Component({
   selector: 'app-heatmap',
@@ -10,10 +10,10 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./heatmap.component.css']
 })
 
-export class HeatmapComponent implements OnInit, AfterViewInit {
+export class HeatmapComponent implements OnChanges, AfterViewInit {
   @ViewChild('map', {static: false}) mapElement: ElementRef;
+  @Input()dataMap: Element;
   map: google.maps.Map;
-
   lat: number;
   lng: number;
   zoom: number;
@@ -22,11 +22,11 @@ export class HeatmapComponent implements OnInit, AfterViewInit {
 
   constructor(private heatmapService: HeatmapService) { }
 
-  ngOnInit(): void {
-  }
-
   ngAfterViewInit() {
-    this.initMaps()
+    this.initMaps();
+  }
+  ngOnChanges() {
+    this.initMaps();
   }
 
   initMaps() {
@@ -37,12 +37,10 @@ export class HeatmapComponent implements OnInit, AfterViewInit {
       };
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
-
-      //this.heatmapService.getAllElements().subscribe(
-        //response => {
-        //  this.incidents = response as Incident[];
-        //  this.eqfeed_callback(JSON.parse(JSON.stringify(this.incidents)));
-      //  });
+        if(this.dataMap !== null) {
+          console.log(this.dataMap);
+          this.eqfeed_callback(JSON.parse(JSON.stringify(this.dataMap)));
+        }
   }
 
   getTotalSegundos(results: string | any[]):number {
@@ -54,21 +52,16 @@ export class HeatmapComponent implements OnInit, AfterViewInit {
   }
 
   eqfeed_callback(results: string | any[]):void {
-      var total = this.getTotalSegundos(results);
-      //Build heatmap
       var heatmapData = [];
 
       for (var i = 0; i < results.length; i++) {
-          var pointList = results[i].location.points;
-          for (var j = 0; j < pointList.length; j++) {
-              var latLng = new google.maps.LatLng(pointList[j].lat, pointList[j].lng);
-              var seconds = results[i].seconds;
-              var weightedLoc = {
-                  location: latLng,
-                  weight: seconds/total
-              };
-              heatmapData.push(weightedLoc);
-          }
+        console.log(results[i]);
+        var latLng = new google.maps.LatLng(results[i].location.lat, results[i].location.lng);
+        var weightedLoc = {
+            location: latLng,
+            weight: results[i].weight
+        };
+        heatmapData.push(weightedLoc);
       }
       var heatmap = new google.maps.visualization.HeatmapLayer({
           data: heatmapData,

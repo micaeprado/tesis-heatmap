@@ -13,6 +13,8 @@ export class ZonesComponent implements AfterViewInit , OnInit{
   @ViewChild('mapZones', {static: false}) mapElement: ElementRef;
   map: google.maps.Map;
   zones: Zone[];
+  infoWindow: google.maps.InfoWindow;
+
 
   constructor(private polygonService : PolygonService) { }
 
@@ -24,6 +26,7 @@ export class ZonesComponent implements AfterViewInit , OnInit{
       center: {lat: -34.6131500, lng: -58.3772300},
       mapTypeId: google.maps.MapTypeId.TERRAIN
     });
+    this.infoWindow = new google.maps.InfoWindow();
 
     this.polygonService.getAllZones()
       .subscribe(response => {
@@ -38,8 +41,16 @@ export class ZonesComponent implements AfterViewInit , OnInit{
             fillOpacity: 0.35
           });
           newPolygon.setMap(this.map);
+          newPolygon.addListener("click", (event) => {this.showName(event, zone.name, this.map)});
         })
       });
   }
+
+  showName(event, name, map) {
+  this.infoWindow.setContent(name);
+  this.infoWindow.setPosition(event.latLng);
+  this.infoWindow.open(map);
+}
+
 
 }

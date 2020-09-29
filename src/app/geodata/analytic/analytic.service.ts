@@ -3,6 +3,7 @@ import { HttpHeaders, HttpClient, HttpRequest, HttpParams } from '@angular/commo
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FileData } from 'src/app/module/fileData';
+import { Zone } from 'src/app/module/zone';
 
 @Injectable({
   providedIn: 'root'
@@ -57,13 +58,15 @@ export class AnalyticService {
   }
 
   createMap(fileName: string, fieldFilter: string, fieldValueFilter: string,
-    func: string, fieldValueFunction: string): Observable<any> {
+    func: string, fieldValueFunction: string, idZone): Observable<any> {
+      console.log(fileName);
     let params = new HttpParams();
     params = params.append('file-name', fileName);
     params = params.append('field-filter', fieldFilter);
     params = params.append('field-value-filter', fieldValueFilter);
     params = params.append('function', func);
     params = params.append('field-value-function', fieldValueFunction);
+    params = params.append('zone', idZone);
 
     return this.http.get(`${this.urlEndPoint}/map`, {params: params}).pipe(
       map((response:any) =>

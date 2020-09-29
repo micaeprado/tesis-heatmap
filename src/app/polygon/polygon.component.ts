@@ -19,7 +19,7 @@ import { Point } from '../module/point';
     @ViewChild('mapPolygon', {static: false}) mapElement: ElementRef;
     polygon: google.maps.Polygon;
     map: google.maps.Map;
-
+    name: string;
     markers = [];
     points :any;
     errors: string[];
@@ -93,7 +93,7 @@ import { Point } from '../module/point';
    }
 
   saveNewPolygon(): void {
-    this.polygonService.create(this.getPoints())
+    this.polygonService.create(this.getZone())
     .subscribe( zona => {
         this.router.navigate(['/polygon'])
         swal.fire('Nueva Zona', `La zona ha sido creado con éxito!`, 'success')
@@ -106,7 +106,7 @@ import { Point } from '../module/point';
     );
   }
 
-    getPoints(): Zone  {
+    getZone(): Zone  {
       let polygonBounds = this.points;
       var bounds:Point[] = [];
       for (var i = 0; i < polygonBounds.length; i++) {
@@ -116,7 +116,8 @@ import { Point } from '../module/point';
           bounds.push(point);
        }
       var zone: Zone = new Zone();
-      zone.points = bounds;
+      zone.points = bounds
+      zone.name = this.name;
       return zone;
     }
 

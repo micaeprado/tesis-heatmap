@@ -1,6 +1,6 @@
-import { Location } from './location';
+import { Point } from './point';
 
 export class Element {
-  weight: number;  
-  location: Location;
+  weight: number;
+  location: Point;
 }
