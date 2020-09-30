@@ -24,6 +24,7 @@ export class AnalyticComponent implements OnInit {
   dataMap: Element[] = null;
   zones: Zone[];
   selectedZone: Zone;
+  map: google.maps.Map;
 
   constructor(
     private polygonService : PolygonService,
@@ -65,6 +66,7 @@ export class AnalyticComponent implements OnInit {
   openModal() {
     this.modalService.openModal();
   }
+
 
   handleOnFilterHeaderChange(value) {
     this.filterHeaderSelected = value;

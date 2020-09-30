@@ -21,6 +21,10 @@ export class ZonesComponent implements AfterViewInit , OnInit{
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
+    this.showAllZones();
+  }
+
+  showAllZones() {
     this.map =  new google.maps.Map(this.mapElement.nativeElement, {
       zoom: 13,
       center: {lat: -34.6131500, lng: -58.3772300},

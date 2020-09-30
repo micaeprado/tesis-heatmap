@@ -3,6 +3,7 @@ import { HeatmapService } from './heatmap.service';
 import {} from 'googlemaps';
 import { map } from 'rxjs/operators';
 import {Element} from 'src/app/module/element';
+import { Zone } from '../module/zone';
 
 @Component({
   selector: 'app-heatmap',
@@ -13,6 +14,7 @@ import {Element} from 'src/app/module/element';
 export class HeatmapComponent implements OnChanges, AfterViewInit {
   @ViewChild('map', {static: false}) mapElement: ElementRef;
   @Input()dataMap: Element;
+  @Input()zone: Zone;
   map: google.maps.Map;
   lat: number;
   lng: number;
@@ -25,8 +27,12 @@ export class HeatmapComponent implements OnChanges, AfterViewInit {
   ngAfterViewInit() {
     this.initMaps();
   }
+
   ngOnChanges() {
     this.initMaps();
+    if(this.zone) {
+      this.showZone();
+    }
   }
 
   initMaps() {
@@ -69,4 +75,17 @@ export class HeatmapComponent implements OnChanges, AfterViewInit {
           map: this.map
       });
   }
+
+  showZone() {
+    const newPolygon = new google.maps.Polygon({
+      paths: this.zone.points,
+      strokeColor: "#FFFFFF",
+      strokeOpacity: 0.8,
+      strokeWeight: 3,
+      fillColor: "#FFFFFF",
+      fillOpacity: 0.35
+    });
+    newPolygon.setMap(this.map);
+  }
+
 }
