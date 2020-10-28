@@ -27,8 +27,8 @@
                   Zona
                 </label>
                 <select class="form-control" id="zoneFormControlSelect"
-                name="selectedZone" required
-                (ngModel)="selectedZone" (ngModelChange)="handleOnZoneChange($event)">
+                name="zone" required
+                (ngModel)="layer.zone" (ngModelChange)="handleOnZoneChange($event)">
                 <option disabled>Seleccionar zona</option>
                   <option [ngValue]="zone" *ngFor="let zone of zones">
                     {{zone.name}}</option>
@@ -36,48 +36,26 @@
             </div>
         </div>
 
-        <div class="col-sm-4">
-            <div class="form-group" *ngIf="fileSelected">
-                <label for="filterFormControlSelect">
-                  Filtro
-                </label>
-                <select class="form-control" id="filterFormControlSelect"
-                name="filterHeaderSelected" required [disabled]="!fileSelected"
-                (ngModel)="filterHeaderSelected" (ngModelChange)="handleOnFilterHeaderChange($event)">
-                  <option [value]="filterHeader"
-                  *ngFor="let filterHeader of fileSelected.header">{{filterHeader}}</option>
-                </select>
-            </div>
-            <div class="form-group"  *ngIf="filterHeaderSelected">
-                <label for="valueFilterFormControlSelect">
-                  Value
-                </label>
-                <select class="form-control" id="valueFilterFormControlSelect"
-                name="valueSelected" required [disabled]="!filterHeaderSelected"
-                (ngModel)="valueSelected" (ngModelChange)="valueSelected = $event">
-                  <option [value]="value" *ngFor="let value of filter">{{value}}</option>
-                </select>
-            </div>
-        </div>
+
         <div class="col-sm-4">
             <div class="form-group" *ngIf="fileSelected">
                 <label for="headerFunctionFormControlSelect">
-                  Filter
+                  Function name
                 </label>
                 <select class="form-control" id="headerFunctionFormControlSelect"
-                 name="functionHeaderSelected" requered [disabled]="!fileSelected"
-                 (ngModel)="functionHeaderSelected" (ngModelChange)="functionHeaderSelected = $event">
+                 name="fieldToCalculate" requered [disabled]="!fileSelected"
+                 (ngModel)="layer.fieldToCalculate" (ngModelChange)="handleOnFieldToCalculateChange($event)">
                   <option [value]="functionHeader"
-                  *ngFor="let functionHeader of fileSelected.header">{{functionHeader}}</option>
+                  *ngFor="let functionHeader of fileSelected.header">{{functionHeader.header}}</option>
                 </select>
             </div>
-            <div class="form-group" *ngIf="functionHeaderSelected">
+            <div class="form-group" *ngIf="layer.functionName">
                 <label for="functionFormControlSelect">
-                  Funcion
+                  Field to calculate
                 </label>
                 <select class="form-control" id="functionFormControlSelect"
-                 name="functionSelected" requered [disabled]="!functionHeaderSelected"
-                (ngModel)="functionSelected" (ngModelChange)="functionSelected = $event">
+                 name="functionName" requered [disabled]="!layer.fieldToCalculate"
+                (ngModel)="layer.functionName" (ngModelChange)="layer.functionName = $event">
                   <option [value]="function" *ngFor="let function of functions">{{function}}</option>
                 </select>
             </div>
@@ -89,5 +67,5 @@
      </div>
     </form>
   </div>
-  <app-heatmap [zone]="selectedZone" [dataMap]="dataMap"></app-heatmap>
+  <app-heatmap [zone]="layer.zone" [dataMap]="dataMap"></app-heatmap>
 </div>

@@ -1,0 +1,3 @@
+export enum FilterType {
+  EQUAL, GREATER, GREATER_EQUAL, LESS, LESS_EQUAL, DIFFERENT
+}

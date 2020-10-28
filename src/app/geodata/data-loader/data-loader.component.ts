@@ -34,7 +34,6 @@ export class DataLoaderComponent implements OnInit {
     this.ngxCsvParser.parse(this.file, { header: this.header, delimiter: ',' })
       .pipe().subscribe((result: Array<any>) => {
         this.items = result[0][0].split(";");
-        //this.modalService.openModal();
       }, (error: NgxCSVParserError) => {
         console.log('Error', error);
       });

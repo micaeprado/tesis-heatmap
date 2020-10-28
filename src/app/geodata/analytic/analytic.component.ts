@@ -4,6 +4,8 @@ import { FileData } from 'src/app/module/fileData';
 import { ModalService } from '../file-modal/modal.service';
 import { Zone } from 'src/app/module/zone';
 import { PolygonService } from 'src/app/polygon/polygon.service';
+import { Layer } from 'src/app/module/layer';
+import { Header } from 'src/app/module/header';
 
 @Component({
   selector: 'app-analytic',
@@ -17,14 +19,16 @@ export class AnalyticComponent implements OnInit {
   functions: string[];
   values: string[];
   fileSelected: FileData;
-  functionHeaderSelected: string;
-  filterHeaderSelected: string;
-  valueSelected:string;
-  functionSelected:string;
   dataMap: Element[] = null;
   zones: Zone[];
-  selectedZone: Zone;
   map: google.maps.Map;
+  layer: Layer = new Layer;
+
+  //functionHeaderSelected: string;
+  //filterHeaderSelected: string;
+  //valueSelected:string;
+  //functionSelected:string;
+  //selectedZone: Zone;
 
   constructor(
     private polygonService : PolygonService,
@@ -52,11 +56,17 @@ export class AnalyticComponent implements OnInit {
 
   handleOnFileDataChange(value: FileData) {
     this.fileSelected = value;
+    this.layer.fileName = value.fileName;
+    console.log(this.fileSelected.header);
   }
 
   handleOnZoneChange(value: Zone) {
     console.log(value);
-    this.selectedZone = value;
+    this.layer.zone = value;
+  }
+
+  handleOnFieldToCalculateChange(value: Header) {
+    this.layer.fieldToCalculate = value.header;
   }
 
   addNewFile(file: FileData) {
@@ -69,7 +79,7 @@ export class AnalyticComponent implements OnInit {
 
 
   handleOnFilterHeaderChange(value) {
-    this.filterHeaderSelected = value;
+  //  this.filterHeaderSelected = value;
     this.analyticService.getFiltersByHeader(this.fileSelected.fileName, value)
     .subscribe(
       response => {
@@ -79,9 +89,7 @@ export class AnalyticComponent implements OnInit {
   }
 
   createMap() {
-    this.analyticService.createMap(this.fileSelected.fileName, this.filterHeaderSelected,
-      this.valueSelected, this.functionSelected,
-       this.functionHeaderSelected, this.selectedZone.id)
+    this.analyticService.createMap(this.layer)
       .subscribe(
         response => {
           this.dataMap = response as Element[];

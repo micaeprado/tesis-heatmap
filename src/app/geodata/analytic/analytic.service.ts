@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { FileData } from 'src/app/module/fileData';
 import { Zone } from 'src/app/module/zone';
+import { Layer } from 'src/app/module/layer';
 
 @Injectable({
   providedIn: 'root'
@@ -57,21 +58,22 @@ export class AnalyticService {
     );
   }
 
-  createMap(fileName: string, fieldFilter: string, fieldValueFilter: string,
-    func: string, fieldValueFunction: string, idZone): Observable<any> {
-      console.log(fileName);
+  createMap(layer: Layer): Observable<any> {
     let params = new HttpParams();
-    params = params.append('file-name', fileName);
-    params = params.append('field-filter', fieldFilter);
-    params = params.append('field-value-filter', fieldValueFilter);
-    params = params.append('function', func);
-    params = params.append('field-value-function', fieldValueFunction);
-    params = params.append('zone', idZone);
 
-    return this.http.get(`${this.urlEndPoint}/map`, {params: params}).pipe(
+    return this.http.post<Layer>(this.urlEndPoint, layer).pipe(
       map((response:any) =>
-        response as String[]
-       )
+        response as Element[]
+       ),
+      catchError(e => {
+        if(e.status == 400){
+          return throwError(e);
+        }
+        if (e.error.mensaje) {
+          console.log(e.error.mensaje);
+        }
+        return throwError(e);
+      })
     );
   }
 

@@ -68,12 +68,29 @@ export class HeatmapComponent implements OnChanges, AfterViewInit {
             weight: results[i].weight
         };
         heatmapData.push(weightedLoc);
+        this.markPoint(latLng);
       }
       var heatmap = new google.maps.visualization.HeatmapLayer({
           data: heatmapData,
           dissipating: false,
           map: this.map
       });
+  }
+
+  markPoint(latLng: google.maps.LatLng) {
+
+  new google.maps.Marker({
+    position: latLng,
+    map: this.map,
+    icon: {
+      path: google.maps.SymbolPath.CIRCLE,
+      scale: 4, //tamaño
+      strokeWeight: 0, //grosor del borde
+      fillColor: '#000', //color de relleno
+      fillOpacity:1// opacidad del relleno
+    },
+  });
+
   }
 
   showZone() {
