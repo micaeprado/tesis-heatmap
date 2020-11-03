@@ -1,0 +1,9 @@
+table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+th {
+    overflow: hidden;
+    white-space: nowrap;
+}

@@ -22,8 +22,10 @@ import { AnalyticComponent } from './geodata/analytic/analytic.component';
 import { ModalService } from './geodata/file-modal/modal.service';
 import { DataLoaderService } from './geodata/data-loader/data-loader.service';
 import { AnalyticService } from './geodata/analytic/analytic.service';
-
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSliderModule } from '@angular/material/slider';
+import {MatSelectModule} from '@angular/material/select';
+import { FunctionComponent } from './geodata/analytic/function/function.component'
 
 const routes : Routes = [
   {path: '', redirectTo: '/incident', pathMatch: 'full'},
@@ -47,13 +49,17 @@ const routes : Routes = [
     DataLoaderComponent,
     FileModalComponent,
     AnalyticComponent,
+    FunctionComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
-    NgxCsvParserModule
+    NgxCsvParserModule,
+    BrowserAnimationsModule,
+    MatSliderModule,
+    MatSelectModule
   ],
   exports: [
     PolygonComponent

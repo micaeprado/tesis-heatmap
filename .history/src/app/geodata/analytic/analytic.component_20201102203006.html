@@ -1,0 +1,68 @@
+<file-modal></file-modal>
+
+<div class="card ">
+    <div class="card-header">{{ title }}</div>
+    <div class="card-body">
+        <form>
+            <div class="input-group mb-3 row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="fileSelectedFormControlSelect">
+                  Cargar CSV
+                </label>
+                        <select class="form-control" id="fileSelectedFormControlSelect" name="fileSelected" required (ngModel)="fileSelected" (ngModelChange)="handleOnFileDataChange($event)">
+                <option disabled>Seleccionar CSV</option>
+                  <option [ngValue]="file" *ngFor="let file of filesData">
+                    {{ file.fileName }}</option>
+                </select>
+                    </div>
+                    <div class="form-group d-flex justify-content-end">
+                        <button class="btn btn-outline-secondary" type="button" id="newCsvButon" (click)="openModal()">Agregar nuevo CSV</button>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="filterFormControlSelect">
+                  Zona
+                </label>
+                        <select class="form-control" id="zoneFormControlSelect" name="zone" required (ngModel)="layer.zone" (ngModelChange)="handleOnZoneChange($event)">
+                <option disabled>Seleccionar zona</option>
+                  <option [ngValue]="zone" *ngFor="let zone of zones">
+                    {{zone.name}}</option>
+                </select>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group" *ngIf="fileSelected">
+                        <label for="headerFunctionFormControlSelect">
+                  Field to calculate
+                </label>
+                        <select class="form-control" id="headerFunctionFormControlSelect" name="fieldToCalculate" requered (ngModel)="layer.fieldToCalculate" (ngModelChange)="handleOnFieldToCalculateChange($event)">
+                  <option [ngValue]="header"
+                  *ngFor="let header of numberHeaders">{{header.header}}</option>
+                </select>
+                    </div>
+                    <div class="form-group" *ngIf="fileSelected">
+                        <label for="functionFormControlSelect">
+                  Function name
+                </label>
+                        <select class="form-control" id="functionFormControlSelect" name="functionName" requered (ngModel)="layer.functionName" (ngModelChange)="layer.functionName = $event">
+                  <option [value]="function" *ngFor="let function of functions">{{function}}</option>
+                </select>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mb-5 row d-flex justify-content-center ">
+                <button [disabled]="!fileSelected" class="btn btn-outline-primary" type="button" id="button-filter" (click)="changeShowFilters()">add filter</button>
+            </div>
+            <div>
+                <app-function *ngIf="showFilters"></app-function>
+            </div>
+            <div class=" mt-5 text-right">
+                <button [disabled]="!fileSelected" class="btn btn-outline-primary" type="button" id="inputGroupFileAddon04" (click)="createMap()">Crear Mapa</button>
+            </div>
+
+        </form>
+    </div>
+    <app-heatmap [zone]="layer.zone" [dataMap]="dataMap"></app-heatmap>
+</div>
