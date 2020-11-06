@@ -56,7 +56,7 @@
                 <button [disabled]="!fileSelected" class="btn btn-outline-primary" type="button" id="button-filter" (click)="changeShowFilters()">Filter CSV data</button>
             </div>
             <div>
-                <app-function [fileSelected]="fileSelected" *ngIf="showFilters"></app-function>
+                <app-function [layer]="layer" [fileSelected]="fileSelected" *ngIf="showFilters"></app-function>
             </div>
             <div class=" mt-5 text-right">
                 <button [disabled]="!fileSelected" class="btn btn-outline-primary" type="button" id="inputGroupFileAddon04" (click)="createMap()">Crear Heatmap</button>

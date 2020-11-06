@@ -17,12 +17,13 @@ import { LayerService } from 'src/app/module/entity/layer.service';
 })
 export class FunctionComponent implements OnInit {
 
+  @Input() layer: Layer;
   @Input() fileSelected: FileData; //para field header
   valuesToFilter: string[][] = [[]];
   responses: FieldFilter[] = [];
   filters: Filter[];
   filtersAllowed: FilterType[][] = [[]];
-  layer: Layer;
+  layer2: Layer;
 
   constructor( private analyticService: AnalyticService,
     private layerService: LayerService) { }
@@ -37,9 +38,8 @@ export class FunctionComponent implements OnInit {
 
     this.layerService.getLayer()
     .subscribe(
-      response => {this.layer = response as Layer}
+      response => {this.layer2 = response as Layer}
     )
-      console.log(this.layer);
   }
 
   addNewFilter() {
@@ -71,23 +71,16 @@ export class FunctionComponent implements OnInit {
         this.valuesToFilter.splice(i, 1, response as string[]);
       }
     )
-    this.layer.fieldFilters = this.responses;
-    this.layerService.setLayer(this.layer);
   }
 
   handleOnFilterChange(value, i) {
     this.responses[i].filterName = value; //los que habia mas value (hacer eso)
-    this.layer.fieldFilters = this.responses;
-    this.layerService.setLayer(this.layer);
   }
 
   handleOnValuesChange(value, i){
-    this.responses[i].valuesToFilter.push(value);
-    console.log(value);
-    console.log(this.responses[i].valuesToFilter);
-    this.layer.fieldFilters = this.responses;
-    this.layerService.setLayer(this.layer);
-    console.log(this.layer);
+    this.responses[i].valuesToFilter = value;
+
+    console.log(this.responses);
   }
 
 }

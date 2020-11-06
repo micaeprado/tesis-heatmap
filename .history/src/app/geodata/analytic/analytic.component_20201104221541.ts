@@ -84,6 +84,8 @@ export class AnalyticComponent implements OnInit {
 
   handleOnFieldToCalculateChange(value: string) {
     this.layer.fieldToCalculate = value;
+    console.log(value)
+    console.log(this.layer);
     this.layerService.setLayer(this.layer);
     }
 
@@ -100,10 +102,6 @@ export class AnalyticComponent implements OnInit {
   }
 
   createMap() {
-    this.layerService.getLayer()
-    .subscribe(
-      response => {this.layer = response as Layer}
-    )
     this.analyticService.createMap(this.layer)
       .subscribe(
         response => {

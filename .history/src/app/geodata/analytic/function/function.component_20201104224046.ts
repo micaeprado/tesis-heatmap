@@ -37,9 +37,9 @@ export class FunctionComponent implements OnInit {
 
     this.layerService.getLayer()
     .subscribe(
-      response => {this.layer = response as Layer}
+      response => {this.layer2 = response as Layer}
     )
-      console.log(this.layer);
+      console.log(this.layer2);
   }
 
   addNewFilter() {
@@ -82,9 +82,7 @@ export class FunctionComponent implements OnInit {
   }
 
   handleOnValuesChange(value, i){
-    this.responses[i].valuesToFilter.push(value);
-    console.log(value);
-    console.log(this.responses[i].valuesToFilter);
+    this.responses[i].valuesToFilter = value;
     this.layer.fieldFilters = this.responses;
     this.layerService.setLayer(this.layer);
     console.log(this.layer);

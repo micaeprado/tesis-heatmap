@@ -33,14 +33,17 @@ export class AnalyticComponent implements OnInit {
   layer: Layer = new Layer;
   showFilters: boolean = false;
   numberHeaders: string[] = [];
-
+  //functionHeaderSelected: string;
+  //filterHeaderSelected: string;
+  //valueSelected:string;
+  //functionSelected:string;
+  //selectedZone: Zone;
 
   constructor(
     private polygonService : PolygonService,
     private analyticService: AnalyticService,
     private modalService: ModalService,
-    private layerService: LayerService
-    ) { }
+    private layerService: LayerService) { }
 
   ngOnInit(): void {
     this.analyticService.getAllFileData().subscribe(
@@ -74,16 +77,16 @@ export class AnalyticComponent implements OnInit {
     this.fileSelected = value;
     this.layer.fileName = value.fileName;
     this.setNumberHeaders(value.header);
-    this.layerService.setLayer(this.layer);
   }
 
   handleOnZoneChange(value: Zone) {
     this.layer.zone = value;
-    this.layerService.setLayer(this.layer);
   }
 
   handleOnFieldToCalculateChange(value: string) {
     this.layer.fieldToCalculate = value;
+    console.log(value)
+    console.log(this.layer);
     this.layerService.setLayer(this.layer);
     }
 
@@ -100,10 +103,6 @@ export class AnalyticComponent implements OnInit {
   }
 
   createMap() {
-    this.layerService.getLayer()
-    .subscribe(
-      response => {this.layer = response as Layer}
-    )
     this.analyticService.createMap(this.layer)
       .subscribe(
         response => {

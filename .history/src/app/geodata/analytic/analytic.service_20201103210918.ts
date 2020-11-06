@@ -67,7 +67,11 @@ export class AnalyticService {
   }
 
   createMap(layer: Layer): Observable<any> {
-    return this.http.post(`${this.urlEndPoint}/map`, layer).pipe(
+    let params = new HttpParams();
+    const json: string = JSON.stringify(layer);
+    params.append('layer', json);
+
+    return this.http.get(`${this.urlEndPoint}/map`, {params: { user: JSON.stringify(layer) }}).pipe(
       map((response:any) =>
         response as Element[]
        ),

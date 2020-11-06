@@ -27,7 +27,7 @@
                         </td>
                         <td class="pt-3-half">
                             <select class="form-control" id="valuesToFilterSelect" name="field" requered (ngModel)="responses[i].valuesToFilter" (ngModelChange)="handleOnValuesChange($event, i)">
-                            <option [value]="value" *ngFor="let value of valuesToFilter[i]">{{value}}</option>
+                            <option [value]="value" *ngFor="let value of valuesToFilter">{{value}}</option>
                         </select>
                         </td>
                         <td>

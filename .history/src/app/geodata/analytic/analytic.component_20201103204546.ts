@@ -7,7 +7,6 @@ import { PolygonService } from 'src/app/polygon/polygon.service';
 import { Layer } from 'src/app/module/layer';
 import { Header } from 'src/app/module/header';
 import { ObjectType } from 'src/app/module/enumeration/objectType';
-import { LayerService } from 'src/app/module/entity/layer.service';
 
 interface Food {
   value: string;
@@ -33,14 +32,16 @@ export class AnalyticComponent implements OnInit {
   layer: Layer = new Layer;
   showFilters: boolean = false;
   numberHeaders: string[] = [];
-
+  //functionHeaderSelected: string;
+  //filterHeaderSelected: string;
+  //valueSelected:string;
+  //functionSelected:string;
+  //selectedZone: Zone;
 
   constructor(
     private polygonService : PolygonService,
     private analyticService: AnalyticService,
-    private modalService: ModalService,
-    private layerService: LayerService
-    ) { }
+    private modalService: ModalService) { }
 
   ngOnInit(): void {
     this.analyticService.getAllFileData().subscribe(
@@ -74,17 +75,16 @@ export class AnalyticComponent implements OnInit {
     this.fileSelected = value;
     this.layer.fileName = value.fileName;
     this.setNumberHeaders(value.header);
-    this.layerService.setLayer(this.layer);
   }
 
   handleOnZoneChange(value: Zone) {
     this.layer.zone = value;
-    this.layerService.setLayer(this.layer);
   }
 
   handleOnFieldToCalculateChange(value: string) {
     this.layer.fieldToCalculate = value;
-    this.layerService.setLayer(this.layer);
+    console.log(value)
+    console.log(this.layer);
     }
 
   changeShowFilters() {
@@ -100,10 +100,6 @@ export class AnalyticComponent implements OnInit {
   }
 
   createMap() {
-    this.layerService.getLayer()
-    .subscribe(
-      response => {this.layer = response as Layer}
-    )
     this.analyticService.createMap(this.layer)
       .subscribe(
         response => {

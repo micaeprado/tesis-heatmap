@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { FileData } from 'src/app/module/fileData';
 import { Zone } from 'src/app/module/zone';
@@ -14,7 +14,10 @@ export class AnalyticService {
   private urlEndPoint:string = "http://localhost:8080/analysis";
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-  constructor(private http : HttpClient) { }
+  private routerInfo: BehaviorSubject<boolean>;
+
+  constructor(private http : HttpClient,
+    routerInfo = new BehaviorSubject<boolean>(false)) { }
 
   getAllFileData(): Observable<any> {
     let params = new HttpParams();
