@@ -1,0 +1,27 @@
+<body>
+    <h3>{{title}}</h3>
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-2">
+                <label for="exampleFormControlSelect3">
+            Nombre:
+          </label>
+            </div>
+            <div class="col-sm">
+                <input type="text" class="form-control" name="name" (ngModelChange)="name = $event" (ngModel)="name" style="width:150px" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <label for="exampleFormControlSelect3">
+            Descripcion:
+          </label>
+            </div>
+            <div class="col-sm">
+                <input type="text" class="form-control" name="description" (ngModelChange)="description = $event" (ngModel)="description" style="width:150px" required>
+            </div>
+        </div>
+    </div>
+    <div #mapPolygon id="mapPolygon"></div>
+    <button type="button" name="save" class="btn btn-primary btn-sm mt-3" (click)='saveNewPolygon()'>Crear nueva Zona</button>
+</body>

@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="row mb-3 d-flex justify-content-center"></div>
+    <h3>{{title}}</h3>
+</div>
+<div class="row mb-3 d-flex justify-content-end">
+    <a class="btn btn-primary" href="/polygon" role="button">Crear nueva Zona</a>
+</div>
+<div class="row mb-3">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Fecha creación</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let zone of zonesPerPage">
+                <th scope="row">{{ zone.id }}</th>
+                <td>{{ zone.name }}</td>
+                <td>{{ zone.description}}</td>
+                <td>{{ zone.date | date }}</td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" (click)="showZone( zone.id )" class="btn btn-primary">
+                            Ver
+                          </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <paginator-nav *ngIf="paginator" [paginator]="paginator" [link]="link"></paginator-nav>
+</div>
+<div #mapZones id="mapZones"></div>

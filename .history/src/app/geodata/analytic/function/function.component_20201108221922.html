@@ -1,0 +1,45 @@
+<!-- Editable table -->
+<div class="card">
+    <div class="card-body">
+        <div id="table" class="table-editable">
+            <span class="table-add float-right mb-3 mr-2"><button type="button"
+              class="btn btn-danger btn-rounded btn-sm my-0" (click)="addNewFilter()">Add new filter</button></span>
+            <table class="table table-bordered table-responsive-md table-striped text-center">
+                <thead>
+                    <tr>
+                        <th class="text-center">Field</th>
+                        <th class="text-center">Filter</th>
+                        <th class="text-center">Value</th>
+                        <th class="text-center">Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of responses; index as i;">
+                        <td class="pt-3-half">
+                            <select class="form-control" id="filterSelect" name="field" requered (ngModel)="responses[i].field" (ngModelChange)="handleOnFieldChange($event, i)">
+                              <option [ngValue]="header" *ngFor="let header of fileSelected.header">{{header.header}}</option>
+                          </select>
+                        </td>
+                        <td class="pt-3-half">
+                            <select class="form-control" id="filterNameSelect" name="field" requered (ngModel)="responses[i].filterName" (ngModelChange)="handleOnFilterChange($event, i)">
+                            <option [value]="filter" *ngFor="let filter of filtersAllowed[i]">{{filter}}</option>
+                        </select>
+                        </td>
+                        <td class="pt-3-half">
+                            <select *ngIf="!isSelectMultiple(i)" class="form-control" id="valuesToFilterSelect" name="field" requered (ngModel)="responses[i].valuesToFilter" (ngModelChange)="handleOnValuesChange($event, i)">
+                                <option [value]="value" *ngFor="let value of valuesToFilter[i]">{{value}}</option>
+                            </select>
+                            <select *ngIf="isSelectMultiple(i)" multiple class="form-control" id="valuesToFilterSelect" name="field" requered (ngModel)="responses[i].valuesToFilter" (ngModelChange)="handleOnValuesChange($event, i)">
+                                <option [value]="value" *ngFor="let value of valuesToFilter[i]">{{value}}</option>
+                            </select>
+                        </td>
+                        <td>
+                            <span class="table-remove"><button type="button"
+                            class="btn btn-danger btn-rounded btn-sm my-0" (click)="removeFilter(i)" >Remove</button></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

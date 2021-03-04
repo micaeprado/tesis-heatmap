@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="row mb-3 d-flex justify-content-center"></div>
+    <h3>{{title}}</h3>
+</div>
+<div class="row mb-3 d-flex justify-content-end">
+    <a class="btn btn-primary" href="/polygon" role="button">Crear nueva Zona</a>
+</div>
+<div class="row mb-3">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Fecha creación</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let country of countries">
+                <th scope="row">{{ country.id }}</th>
+                <td>
+                    <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2" style="width: 20px"> {{ country.name }}
+                </td>
+                <td>{{ country.area | number}}</td>
+                <td>{{ country.population | number }}</td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary">
+                            Ver
+                          </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div #mapZones id="mapZones"></div>

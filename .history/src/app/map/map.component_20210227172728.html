@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="row mb-3 d-flex justify-content-end">
+        <a class="btn btn-primary" href="/new-map" role="button">Crear nuevo mapa</a>
+    </div>
+    <div class="row mb-3">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Fecha creación</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let country of countries">
+                    <th scope="row">{{ country.id }}</th>
+                    <td>
+                        <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2" style="width: 20px"> {{ country.name }}
+                    </td>
+                    <td>{{ country.area | number}}</td>
+                    <td>{{ country.population | number }}</td>
+                    <td>
+                        <div class="btn-group">
+                            <button class="btn"><i class="fa fa-home"></i></button>
+                            <button type="button" class="btn btn-primary">
+                              <i class="fa fa-home"></i>
+                  </button>
+                            <button type="button" class="btn btn-success" aria-label="Left Align">
+                              <i class="fa fa-home"></i>
+                  </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

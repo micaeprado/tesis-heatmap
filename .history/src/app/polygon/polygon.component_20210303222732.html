@@ -1,0 +1,17 @@
+<body>
+    <h3>{{title}}</h3>
+    <div class="mb-3 row">
+        <label for="inputPassword" class="col-sm-2 col-form-label">Nombre:</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="name" name="name" (ngModelChange)="name = $event" (ngModel)="name" required>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="inputPassword" class="col-sm-2 col-form-label">Descripcion:</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="description" name="description" (ngModelChange)="description = $event" (ngModel)="description" required>
+        </div>
+    </div>
+    <div #mapPolygon id="mapPolygon"></div>
+    <button type="button" name="save" class="btn btn-primary btn-sm mt-3" (click)='saveNewPolygon()'>Crear nueva Zona</button>
+</body>
